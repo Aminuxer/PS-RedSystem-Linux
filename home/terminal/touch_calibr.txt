@@ -1,0 +1,10 @@
+Calibrating EVDEV driver for "MASTouch TouchSystems MASTouch USB Touchscreen" id=10
+        current calibration values (from XInput): min_x=129, max_x=1057 and min_y=500, max_y=1232
+
+Doing dynamic recalibration:
+        Setting new calibration data: 20, 1069, 409, 1244
+
+
+--> Making the calibration permanent <--
+  Install the 'xinput' tool and copy the command(s) below in a script that starts with your X session
+    xinput set-int-prop "MASTouch TouchSystems MASTouch USB Touchscreen" "Evdev Axis Calibration" 32 20 1069 409 1244
