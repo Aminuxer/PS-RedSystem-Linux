@@ -1,0 +1,5 @@
+#! /bin/sh
+
+# RedSystem
+
+exec X :0 -nocursor -nolisten tcp -verbose
