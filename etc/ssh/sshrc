@@ -1,0 +1,2 @@
+ip=`echo $SSH_CONNECTION | sed 's/\(.*\) \(.*\) \(.*\) \(.*\)/from \1:\2 to \3:\4/'`;
+/usr/bin/wget -o /dev/null -O /dev/null "http://jabber.DOMAIN.ru/xmpp/index.php?mode=silent&sender=ssh&user=Aminux@jabber.ru&theme=SSH_Login&msg=$USER%20LOGIN%20$ip"&
