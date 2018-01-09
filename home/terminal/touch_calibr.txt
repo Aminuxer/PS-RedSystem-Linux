@@ -8,3 +8,39 @@ Doing dynamic recalibration:
 --> Making the calibration permanent <--
   Install the 'xinput' tool and copy the command(s) below in a script that starts with your X session
     xinput set-int-prop "MASTouch TouchSystems MASTouch USB Touchscreen" "Evdev Axis Calibration" 32 20 1069 409 1244
+
+
+/* -------------------------------------- */
+Calibrating LibInput driver
+
+$ xinput_calibrator -v
+
+Do the calibration, then look for the DEBUG output lines:
+
+DEBUG: Adding click 0 (X=181, Y=132)
+DEBUG: Adding click 1 (X=862, Y=129)
+DEBUG: Adding click 2 (X=186, Y=661)
+DEBUG: Adding click 3 (X=868, Y=665)
+
+We need the X and Y values from click 0 and click 3.
+
+5. Get display resolution using xrandr:
+
+$ xrandr | grep current
+Screen 0: minimum 8 x 8, current 1024 x 768, maximum 32767 x 32767
+
+6. We now need to calculate four values, called "a", "c", "e", and "f" (reference).
+
+a = (screen_width * 6 / 8) / (click_3_X - click_0_X)
+c = ((screen_width / 8) - (a * click_0_X)) / screen_width
+e = (screen_height * 6 / 8) / (click_3_Y - click_0_Y)
+f = ((screen_height / 8) - (e * click_0_Y)) / screen_height
+
+7. Test the values with the following command (replace a, c, e, and f with your calculated numbers):
+
+$ xinput set-prop "Fujitsu Component USB Touch Panel" "libinput Calibration Matrix" a, 0.0, c, 0.0, e, f, 0.0, 0.0, 1.0
+
+The touchscreen should be calibrated now. If not, you can undo the calibration with this reset command:
+
+$ xinput set-prop "Fujitsu Component USB Touch Panel" "libinput Calibration Matrix" 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0
+/* from arch-wiki */
